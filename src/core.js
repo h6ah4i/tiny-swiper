@@ -421,13 +421,13 @@ export default class Swiper {
         this.isHorizontal = isHorizontal
         this.$list = [].slice.call($el.getElementsByClassName(config.slideClass))
         this.minIndex = 0
-        this.maxIndex = this.$list.length - (config.centeredSlides ? 1 : Math.ceil(config.slidesPerView))
+        this.maxIndex = Math.max(0, this.$list.length - (config.centeredSlides ? 1 : Math.ceil(config.slidesPerView)))
         this.viewSize = isHorizontal ? $el.offsetWidth : $el.offsetHeight
         this.slideSize = (this.viewSize - (Math.ceil(config.slidesPerView - 1)) * config.spaceBetween) / config.slidesPerView
         this.boxSize = this.slideSize + config.spaceBetween
         this.baseTransform = config.centeredSlides ? (this.slideSize - this.viewSize) / 2 : 0
         this.minTransform = -this.baseTransform
-        this.maxTransform = this.boxSize * this.$list.length - config.spaceBetween - this.viewSize - this.baseTransform
+        this.maxTransform = Math.max(0, this.boxSize * this.$list.length - config.spaceBetween - this.viewSize - this.baseTransform)
         this.$list.forEach(item => {
             item.style[isHorizontal ? 'width' : 'height'] = `${this.slideSize}px`
             item.style[isHorizontal ? 'margin-right' : 'margin-bottom'] = `${config.spaceBetween}px`
